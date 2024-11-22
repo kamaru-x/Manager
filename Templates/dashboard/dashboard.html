@@ -1,0 +1,81 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+<!-- Overview Cards -->
+<div class="grid md:grid-cols-4 gap-6 mt-8">
+    <!-- Today's Income Card -->
+    <div class="bg-gradient-to-r from-green-400 to-green-500 text-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow flex items-center">
+        <div class="bg-white bg-opacity-20 w-16 h-16 flex justify-center items-center rounded-full">
+            <i class="fas fa-indian-rupee-sign text-2xl"></i>
+        </div>
+        <div class="ml-4">
+            <h3 class="text-sm font-semibold">Today's Income</h3>
+            <p class="text-4xl font-bold">₹{{ income_today }}</p>
+        </div>
+    </div>
+
+    <!-- Today's Expense Card -->
+    <div class="bg-gradient-to-r from-red-400 to-red-500 text-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow flex items-center">
+        <div class="bg-white bg-opacity-20 w-16 h-16 flex justify-center items-center rounded-full">
+            <i class="fas fa-indian-rupee-sign text-2xl"></i>
+        </div>
+        <div class="ml-4">
+            <h3 class="text-sm font-semibold">Today's Expense</h3>
+            <p class="text-4xl font-bold">₹{{ expense_today }}</p>
+        </div>
+    </div>
+
+    <!-- Todo Card -->
+    <div class="bg-gradient-to-r from-blue-400 to-blue-500 text-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow flex items-center">
+        <div class="bg-white bg-opacity-20 w-16 h-16 flex justify-center items-center rounded-full">
+            <i class="fas fa-clock text-2xl"></i>
+        </div>
+        <div class="ml-4">
+            <h3 class="text-sm font-semibold">Todo</h3>
+            <p class="text-4xl font-bold">{{ todo_completed.count }} / {{ todos.count }}</p>
+        </div>
+    </div>
+
+    <!-- Task Card -->
+    <div class="bg-gradient-to-r from-yellow-400 to-yellow-500 text-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow flex items-center">
+        <div class="bg-white bg-opacity-20 w-16 h-16 flex justify-center items-center rounded-full">
+            <i class="fas fa-tasks text-2xl"></i>
+        </div>
+        <div class="ml-4">
+            <h3 class="text-sm font-semibold">Tasks</h3>
+            <p class="text-4xl font-bold">{{ task_completed.count }} / {{ tasks.count }}</p>
+        </div>
+    </div>
+</div>
+
+<!-- Transactions and Timesheet -->
+<div class="grid md:grid-cols-2 gap-6 mt-8">
+    {% if todos %}
+        <div class="w-full overflow-x-auto scrollbar-hide">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Timesheet</h2>
+            <div class="flex flex-col gap-3">
+                {% for todo in todos %}
+                    <div class="mb-2 flex items-center justify-between p-4 hover:bg-gray-50 transition-colors duration-150 ease-in-out rounded-lg border border-gray-100 min-w-[400px] bg-white shadow-md hover:shadow-lg transition-shadow">
+                        <h3 class="text-lg font-medium text-gray-900">{{ todo.title }}</h3>
+                        <span class="text-lg font-semibold {% if todo.priority == 'High' %} text-red-500 {% elif todo.priority == 'Normal' %} text-yellow-500 {% elif todo.priority == 'Low' %} text-blue-500 {% endif %}">{{ todo.priority }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if transactions %}
+        <div class="w-full overflow-x-auto scrollbar-hide">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Transactions</h2>
+
+            <div class="flex flex-col gap-3">
+                {% for transaction in transactions %}
+                    <div class="mb-2 flex items-center justify-between p-4 hover:bg-gray-50 transition-colors duration-150 ease-in-out rounded-lg border border-gray-100 min-w-[400px] bg-white shadow-md hover:shadow-lg transition-shadow">
+                        <h3 class="text-lg font-medium text-gray-900">{{ transaction.title }}</h3>
+                        <span class="text-lg font-semibold {% if transaction.type == 'expense' %} text-green-500 {% else %} text-red-500 {% endif %}">₹{{ transaction.amount }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock content %}

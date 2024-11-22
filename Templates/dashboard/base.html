@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MY MANAGER</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    </head>
+
+    <style>
+        body {
+            overflow-y: scroll;
+            overflow-x: auto;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+
+    <body class="bg-gray-50 body body">
+        <div class="container mx-auto px-6 py-8">
+            <!-- Navigation Tabs -->
+            <nav class="bg-white rounded-xl shadow-md">
+                <div class="flex overflow-x-auto scrollbar-hide p-2 lg:flex-nowrap lg:overflow-hidden">
+                    <a href="{% url 'dashboard' %}" class="flex flex-1 items-center justify-center space-x-2 px-4 py-2 rounded-lg {% if page == 'dashboard' %} bg-blue-50 text-blue-600 {% else %} hover:bg-gray-100 group focus:bg-blue-50 focus:text-blue-600 {% endif %}">
+                        <i class="fas fa-home text-gray-500 group-hover:text-blue-600"></i>
+                        <span class="text-sm text-gray-600 group-hover:text-blue-600">Dashboard</span>
+                    </a>
+                    <a href="{% url 'transactions' %}" class="flex flex-1 items-center justify-center space-x-2 px-4 py-2 rounded-lg {% if page == 'transactions' %} bg-blue-50 text-blue-600 {% else %} hover:bg-gray-100 group focus:bg-blue-50 focus:text-blue-600 {% endif %}">
+                        <i class="fas fa-credit-card text-gray-500 group-hover:text-blue-600"></i>
+                        <span class="text-sm text-gray-600 group-hover:text-blue-600">Transactions</span>
+                    </a>
+                    <!-- <a href="{% url 'timesheet' %}" class="flex flex-1 items-center justify-center space-x-2 px-4 py-2 rounded-lg {% if page == 'timesheet' %} bg-blue-50 text-blue-600 {% else %} hover:bg-gray-100 group focus:bg-blue-50 focus:text-blue-600 {% endif %}">
+                        <i class="fas fa-clock text-gray-500 group-hover:text-blue-600"></i>
+                        <span class="text-sm text-gray-600 group-hover:text-blue-600">Timesheet</span>
+                    </a> -->
+                    <a href="{% url 'todo' %}" class="flex flex-1 items-center justify-center space-x-2 px-4 py-2 rounded-lg {% if page == 'todo' %} bg-blue-50 text-blue-600 {% else %} hover:bg-gray-100 group focus:bg-blue-50 focus:text-blue-600 {% endif %}">
+                        <i class="fas fa-circle-check text-gray-500 group-hover:text-blue-600"></i>
+                        <span class="text-sm text-gray-600 group-hover:text-blue-600">Todo</span>
+                    </a>
+                    <a href="{% url 'journals' %}" class="flex flex-1 items-center justify-center space-x-2 px-4 py-2 rounded-lg {% if page == 'journals' %} bg-blue-50 text-blue-600 {% else %} hover:bg-gray-100 group focus:bg-blue-50 focus:text-blue-600 {% endif %}">
+                        <i class="fas fa-book-journal-whills text-gray-500 group-hover:text-blue-600"></i>
+                        <span class="text-sm text-gray-600 group-hover:text-blue-600">Journals</span>
+                    </a>
+                    <a href="{% url 'checklist' %}" class="flex flex-1 items-center justify-center space-x-2 px-4 py-2 rounded-lg {% if page == 'checklist' %} bg-blue-50 text-blue-600 {% else %} hover:bg-gray-100 group focus:bg-blue-50 focus:text-blue-600 {% endif %}">
+                        <i class="fas fa-clipboard-list text-gray-500 group-hover:text-blue-600"></i>
+                        <span class="text-sm text-gray-600 group-hover:text-blue-600">Checklist</span>
+                    </a>
+                    <a href="{% url 'masters' %}" class="flex flex-1 items-center justify-center space-x-2 px-4 py-2 rounded-lg {% if page == 'masters' %} bg-blue-50 text-blue-600 {% else %} hover:bg-gray-100 group focus:bg-blue-50 focus:text-blue-600 {% endif %}">
+                        <i class="fas fa-bullseye text-gray-500 group-hover:text-blue-600"></i>
+                        <span class="text-sm text-gray-600 group-hover:text-blue-600">Masters</span>
+                    </a>
+                </div>
+            </nav>
+
+            {% block content %}
+
+            {% endblock content %}
+        </div>
+    </body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-50 min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
+        <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">MY MANAGER</h2>
+
+        <!-- Login Form -->
+        <form method="POST" class="space-y-6">
+            {% csrf_token %}
+            <!-- Username -->
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                    <i class="fas fa-user text-gray-500 px-3"></i>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" class="w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                    <i class="fas fa-lock text-gray-500 px-3"></i>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" class="w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+            </div>
+
+            <div>
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="text-red-500 text-center">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <!-- Login Button -->
+            <div>
+                <button type="submit" class="w-full bg-blue-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Sign In</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

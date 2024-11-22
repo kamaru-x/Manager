@@ -1,0 +1,142 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+
+<!-- Three Equal-Sized Buttons (Tabs) with Blue Gradient -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+    <button id="categories-btn" onclick="showTab('categories')" class="tab-button w-full py-2 text-white bg-gradient-to-r from-blue-500 to-blue-700 rounded-lg shadow-md focus:outline-none">
+        CATEGORIES
+    </button>
+    <button id="accounts-btn" onclick="showTab('accounts')" class="tab-button w-full py-2 text-gray-600 rounded-lg shadow-md focus:outline-none">
+        ACCOUNTS
+    </button>
+    <!-- <button id="activities-btn" onclick="showTab('activities')" class="tab-button w-full py-2 text-gray-600 rounded-lg shadow-md focus:outline-none">
+        ACTIVITIES
+    </button> -->
+</div>
+
+<!-- Tab Contents -->
+<div id="categories" class="tab-content mt-6 hidden">
+    <div class="flex justify-between items-center">
+        <h2 class="text-xl font-semibold text-gray-800">Categories</h2>
+        <a href="{% url 'add-category' %}" class="flex items-center bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transition duration-200 space-x-2">
+            <i class="fas fa-plus"></i>
+            <span>Add Category</span>
+        </a>
+    </div>
+
+    <div class="w-full overflow-x-auto scrollbar-hide mt-5">
+        <div class="flex flex-col gap-3">
+
+            {% if categories %}
+                <div class="overflow-x-auto bg-white rounded-lg shadow-lg">
+                    <table class="min-w-full table-auto text-left">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="px-10 py-2 text-sm font-medium text-gray-600 text-center whitespace-nowrap">Category</th>
+                                <th class="px-10 py-2 text-sm font-medium text-gray-600 text-center whitespace-nowrap">Date</th>
+                                <th class="px-10 py-2 text-sm font-medium text-gray-600 text-center whitespace-nowrap">Type</th>
+                                <th class="px-10 py-2 text-sm font-medium text-gray-600 text-center whitespace-nowrap">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for category in categories %}
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="px-10 py-4 text-sm text-gray-900 text-center whitespace-nowrap">{{ category.title }}</td>
+                                    <td class="px-10 py-4 text-sm text-gray-900 text-center whitespace-nowrap">{{ category.date | date:'d M Y' }}</td>
+                                    <td class="px-10 py-4 text-sm {% if category.type == 'Income' %} text-green-500 {% elif category.type == 'Expense' %} text-red-500 {% endif %} text-center whitespace-nowrap">{{ category.type }}</td>
+                                    <td class="px-10 py-4 text-sm text-center whitespace-nowrap">
+                                        <a href="{% url 'delete-category' category.id %}" onclick="return confirm('Are you sure you want to delete this category?')">
+                                            <i class="fas fa-trash-alt text-red-500"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="mb-2 gap-10 px-10 flex items-center justify-center p-4 hover:bg-gray-50 transition-colors duration-150 ease-in-out rounded-lg border border-gray-100 min-w-[300px] bg-white shadow-md hover:shadow-lg transition-shadow">
+                    <span class="text-lg font-medium text-gray-900 whitespace-nowrap">NO DATA FOUND</span>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+<div id="accounts" class="tab-content mt-6 hidden">
+    <div class="flex justify-between items-center">
+        <h2 class="text-xl font-semibold text-gray-800">Accounts</h2>
+        <a href="{% url 'add-account' %}" class="flex items-center bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transition duration-200 space-x-2">
+            <i class="fas fa-plus"></i>
+            <span>Add Account</span>
+        </a>
+    </div>
+
+    <div class="w-full overflow-x-auto scrollbar-hide mt-5">
+        <div class="flex flex-col gap-3">
+
+            {% if accounts %}
+                <div class="overflow-x-auto bg-white rounded-lg shadow-lg">
+                    <table class="min-w-full table-auto text-left">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="px-10 py-2 text-sm font-medium text-gray-600 text-center whitespace-nowrap">Category</th>
+                                <th class="px-10 py-2 text-sm font-medium text-gray-600 text-center whitespace-nowrap">Date</th>
+                                <th class="px-10 py-2 text-sm font-medium text-gray-600 text-center whitespace-nowrap">Bank</th>
+                                <th class="px-10 py-2 text-sm font-medium text-gray-600 text-center whitespace-nowrap">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for account in accounts %}
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="px-10 py-4 text-sm text-gray-900 text-center whitespace-nowrap">{{ account.title }}</td>
+                                    <td class="px-10 py-4 text-sm text-gray-900 text-center whitespace-nowrap">{{ account.date | date:'d M Y' }}</td>
+                                    <td class="px-10 py-4 text-sm text-gray-900 text-center whitespace-nowrap">{{ account.bank }}</td>
+                                    <td class="px-10 py-4 text-sm text-center whitespace-nowrap">
+                                        <a href="{% url 'delete-account' account.id %}" onclick="return confirm('Are you sure you want to delete this category?')">
+                                            <i class="fas fa-trash-alt text-red-500"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="mb-2 gap-10 px-10 flex items-center justify-center p-4 hover:bg-gray-50 transition-colors duration-150 ease-in-out rounded-lg border border-gray-100 min-w-[300px] bg-white shadow-md hover:shadow-lg transition-shadow">
+                    <span class="text-lg font-medium text-gray-900 whitespace-nowrap">NO DATA FOUND</span>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function showTab(tab) {
+        // Hide all tab contents
+        const allTabs = document.querySelectorAll('.tab-content');
+        allTabs.forEach(tabContent => tabContent.classList.add('hidden'));
+
+        // Show the selected tab
+        document.getElementById(tab).classList.remove('hidden');
+
+        // Remove the active class from all buttons
+        const allButtons = document.querySelectorAll('.tab-button');
+        allButtons.forEach(button => {
+            button.classList.remove('bg-gradient-to-r', 'from-blue-500', 'to-blue-700', 'text-white');
+            button.classList.add('bg-gray-100', 'text-gray-600');  // Default color for inactive buttons
+        });
+
+        // Add the active class to the clicked button
+        const activeButton = document.getElementById(tab + '-btn');
+        activeButton.classList.add('bg-gradient-to-r', 'from-blue-500', 'to-blue-700', 'text-white');
+    }
+
+    // Default to show the 'categories' tab and highlight the first button
+    document.getElementById('categories').classList.remove('hidden');
+    document.getElementById('categories-btn').classList.add('bg-gradient-to-r', 'from-blue-500', 'to-blue-700', 'text-white');
+</script>
+
+{% endblock content %}

@@ -1,0 +1,45 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+<!-- Overview Cards -->
+<div class="grid md:grid-cols-3 gap-6 mt-8">
+    <div class="bg-gradient-to-r from-green-400 to-green-500 text-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow flex items-center">
+        <div class="bg-white bg-opacity-20 w-16 h-16 flex justify-center items-center rounded-full">
+            <i class="fas fa-pen text-2xl"></i>
+        </div>
+        <div class="ml-4">
+            <h3 class="text-sm font-semibold">Entries This Month</h3>
+            <p class="text-4xl font-bold">25</p>
+        </div>
+    </div>
+    <div class="bg-gradient-to-r from-purple-400 to-purple-500 text-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow flex items-center">
+        <div class="bg-white bg-opacity-20 w-16 h-16 flex justify-center items-center rounded-full">
+            <i class="fas fa-clock text-2xl"></i>
+        </div>
+        <div class="ml-4">
+            <h3 class="text-sm font-semibold">Reminders Set</h3>
+            <p class="text-4xl font-bold">10</p>
+        </div>
+    </div>
+    <div class="bg-gradient-to-r from-blue-400 to-blue-500 text-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow flex items-center">
+        <div class="bg-white bg-opacity-20 w-16 h-16 flex justify-center items-center rounded-full">
+            <i class="fas fa-chart-line text-2xl"></i>
+        </div>
+        <div class="ml-4">
+            <h3 class="text-sm font-semibold">Words Written</h3>
+            <p class="text-4xl font-bold">5,000</p>
+        </div>
+    </div>
+</div>
+
+<!-- Journal List -->
+{% if journals %}
+    <div class="grid gap-4 mt-8">
+        {% for journal in journals %}
+            <a href="{% url 'journal' journal.id %}" class="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors duration-150 ease-in-out rounded-lg border border-gray-100 bg-white shadow-md hover:shadow-lg">
+                <h3 class="text-sm font-medium text-gray-900">{{ journal.title }}</h3>
+                <p class="text-xs text-gray-500">{{ journal.date | date:'d M Y' }}</p>
+            </a>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock content %}

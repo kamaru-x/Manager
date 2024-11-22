@@ -1,0 +1,71 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+<!-- Button Tabs for Today and Previous Days -->
+<div class="mt-6">
+    <div class="flex space-x-4">
+        <button id="today-btn" onclick="showTab('today')" class="tab-button w-full py-2 text-gray-600 rounded-lg shadow-md focus:outline-none">
+            TODAY
+        </button>
+        <button id="previous-btn" onclick="showTab('previous')" class="tab-button w-full py-2 text-gray-600 rounded-lg shadow-md focus:outline-none">
+            PREVIOUS
+        </button>
+    </div>
+</div>
+
+<!-- Tab Contents -->
+<div class="tab-content mt-6" id="today">
+    <div class="grid md:grid-cols-2 gap-4 mt-8">
+        {% for task in tasks %}
+            <a href="{% url 'mark-task-completed' task.id %}" class="flex items-center justify-between p-4 transition-colors duration-150 ease-in-out rounded-lg border border-gray-100
+                {% if task.is_completed %} bg-gradient-to-r from-green-400 to-green-500 text-white {% else %} bg-white shadow-md hover:shadow-lg {% endif %}">
+                <div class="flex items-center">
+                    {% if task.is_completed %}
+                        <i class="fas fa-check-circle text-lg mr-3"></i>
+                    {% endif %}
+                    <h3 class="text-sm font-medium
+                        {% if task.is_completed %} text-white {% else %} text-gray-900 {% endif %}">
+                        {{ task.title.title }}
+                    </h3>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+
+<div class="tab-content mt-6 hidden" id="previous">
+    <div class="grid md:grid-cols-4 gap-4 mt-8">
+        {% for date in dates %}
+            <a href="{% url 'tasks' date.date|date:'Y-m-d' %}" class="flex items-center justify-center p-4 hover:bg-gray-50 transition-colors duration-150 ease-in-out rounded-lg border border-gray-100 bg-white shadow-md hover:shadow-lg">
+                <h3 class="text-sm font-medium text-gray-900">{{ date.date | date:"d F Y" | upper}}</h3>
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    function showTab(tab) {
+        // Hide all tab contents
+        const allTabs = document.querySelectorAll('.tab-content');
+        allTabs.forEach(tabContent => tabContent.classList.add('hidden'));
+
+        // Show the selected tab
+        document.getElementById(tab).classList.remove('hidden');
+
+        // Remove the active class from all buttons
+        const allButtons = document.querySelectorAll('.tab-button');
+        allButtons.forEach(button => {
+            button.classList.remove('bg-gradient-to-r', 'from-blue-500', 'to-blue-700', 'text-white');
+            button.classList.add('bg-gray-100', 'text-gray-600');  // Default color for inactive buttons
+        });
+
+        // Add the active class to the clicked button
+        const activeButton = document.getElementById(tab + '-btn');
+        activeButton.classList.add('bg-gradient-to-r', 'from-blue-500', 'to-blue-700', 'text-white');
+    }
+
+    // Default to show the 'categories' tab and highlight the first button
+    document.getElementById('today').classList.remove('hidden');
+    document.getElementById('today-btn').classList.add('bg-gradient-to-r', 'from-blue-500', 'to-blue-700', 'text-white');
+</script>
+{% endblock content %}

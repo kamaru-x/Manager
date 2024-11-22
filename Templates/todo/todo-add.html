@@ -1,0 +1,35 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+
+<div class="container mx-auto py-8">
+    <div class="mx-auto bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Add Todo</h2>
+
+        <!-- Form -->
+        <form action="" method="POST" class="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% csrf_token %}
+
+            <div class="flex flex-col">
+                <label for="title" class="text-sm font-medium text-gray-600 mb-2">Title</label>
+                <input type="text" id="title" name="title" required class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter transaction title">
+            </div>
+
+            <div class="flex flex-col">
+                <label for="priority" class="text-sm font-medium text-gray-600 mb-2">Todo Priority</label>
+                <select id="priority" name="priority" class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">Select Priority</option>
+                    <option value="High">High</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Low">Low</option>
+                </select>
+            </div>
+
+            <div class="mt-6 col-span-1 md:col-span-2">
+                <button type="submit" class="w-full py-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg shadow-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                    Add Todo
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
