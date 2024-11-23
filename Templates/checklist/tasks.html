@@ -12,7 +12,7 @@
 <div class="tab-content mt-6" id="today">
     <div class="grid md:grid-cols-2 gap-4 mt-8">
         {% for task in tasks %}
-            <a href="{% url 'mark-task-completed' task.id %}" class="flex items-center justify-between p-4 transition-colors duration-150 ease-in-out rounded-lg border border-gray-100
+            <div class="flex items-center justify-between p-4 transition-colors duration-150 ease-in-out rounded-lg border border-gray-100
                 {% if task.is_completed %} bg-gradient-to-r from-green-400 to-green-500 text-white {% else %} bg-white shadow-md hover:shadow-lg {% endif %}">
                 <div class="flex items-center">
                     {% if task.is_completed %}
@@ -23,7 +23,7 @@
                         {{ task.title.title }}
                     </h3>
                 </div>
-            </a>
+            </div>
         {% endfor %}
     </div>
 </div>

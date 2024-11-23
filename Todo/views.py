@@ -45,8 +45,7 @@ def add_todo(request):
 
 @login_required
 def mark_todo_completed(request, id):
-    if request.method == "POST":
-        todo = Todo.objects.get(id=id)
-        todo.is_completed = True
-        todo.save()
+    todo = Todo.objects.get(id=id)
+    todo.is_completed = True
+    todo.save()
     return redirect('todo')

@@ -27,10 +27,9 @@ def checklist(request):
 
 @login_required
 def mark_task_completed(request,id):
-    if request.method == 'POST':
-        task = Task.objects.get(id)
-        task.is_completed = True
-        task.save()
+    task = Task.objects.get(id=id)
+    task.is_completed = True
+    task.save()
     return redirect('checklist')
 
 
