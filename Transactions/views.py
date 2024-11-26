@@ -76,19 +76,19 @@ def delete_account(request,id):
 @login_required
 def transactions(request):
     transactions = Transaction.objects.all()
-
+    
     # Get filter parameters
-    from_date = request.GET.get('from_date')
+    start_date = request.GET.get('start_date')
     end_date = request.GET.get('end_date')
-    category = request.GET.get('category')
+    category_id = request.GET.get('category')
 
-    # Apply filters if parameters are provided
-    if from_date:
-        transactions = transactions.filter(date__gte=from_date)
+    # Apply filters if they exist
+    if start_date:
+        transactions = transactions.filter(date__gte=start_date)
     if end_date:
         transactions = transactions.filter(date__lte=end_date)
-    if category:
-        transactions = transactions.filter(category_id=category)
+    if category_id:
+        transactions = transactions.filter(category_id=category_id)
 
     # Order the transactions
     transactions = transactions.order_by('-date', '-id')
@@ -97,7 +97,9 @@ def transactions(request):
     income = transactions.filter(type='Income').aggregate(total_amount=Sum('amount'))['total_amount'] or 0
     expense = transactions.filter(type='Expense').aggregate(total_amount=Sum('amount'))['total_amount'] or 0
     balance = float(income) - float(expense)
-    categories = Category.objects.all()
+
+    # Get all categories for the filter dropdown
+    categories = Category.objects.all().order_by('type', 'title')
 
     context = {
         'page': 'transactions',
@@ -105,10 +107,10 @@ def transactions(request):
         'income': income,
         'expense': expense,
         'balance': balance,
-        'categories': categories,
-        'from_date': from_date,
+        'start_date': start_date,
         'end_date': end_date,
-        'selected_category': category
+        'selected_category': category_id,
+        'categories': categories
     }
     return render(request, 'transactions/transactions.html', context)
 
